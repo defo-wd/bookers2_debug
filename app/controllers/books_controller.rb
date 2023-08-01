@@ -1,10 +1,13 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:home, :about, :new, :create]
+  before_action :set_book, only: [:show]
 
   def show
     @book = Book.find(params[:id])
     @new_book = Book.new
     @user = @book.user
+    @comment = Comment.new
+    @comments = Comment.all
   end
 
   def index
@@ -57,4 +60,11 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+
+
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+
 end
