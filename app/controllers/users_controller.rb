@@ -25,6 +25,25 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+  
+  def follow
+    user = User.find(params[:user_id])
+    if current_user.follow(user)
+      redirect_to user_path(user), notice: "You followed #{user.name}."
+    else
+      redirect_to user_path(user), alert: "Failed to follow #{user.name}."
+    end
+  end
+
+  def unfollow
+    user = User.find(params[:user_id])
+    if current_user.unfollow(user)
+      redirect_to user_path(user), notice: "You unfollowed #{user.name}."
+    else
+      redirect_to user_path(user), alert: "Failed to unfollow #{user.name}."
+    end
+  end
+
 
   private
 

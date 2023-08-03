@@ -1,17 +1,31 @@
-<table class='table'>
-  <tr><%= image_tag user.get_profile_image, size:'100x100' %></tr>
-  <tr>
-	  <th>name</th>
-	  <th><%= user.name %></th>
-  </tr>
-  <tr>
-	  <th>introduction</th>
-	  <th><%= user.introduction %></th>
-  </tr>
-</table>
+<div class="user-info">
+  <%= image_tag user.get_profile_image, size: '100x100' %>
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <td><%= user.name %></td>
+    </tr>
+    <tr>
+      <th>Introduction</th>
+      <td><%= user.introduction %></td>
+    </tr>
+    <tr>
+      <th>Followers</th>
+      <td><%= link_to user.followers_count, user_followers_path(user) %></td>
+    </tr>
+    <tr>
+      <th>Followings</th>
+      <td><%= link_to user.followings_count, user_followings_path(user) %></td>
+    </tr>
+  </table>
 
-<div class='row'>
-  <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
-    <i class="fas fa-user-cog"></i>
+  <% if current_user != user %>
+    <div class='row'>
+      <% if current_user.following?(user) %>
+        <%= link_to "Unfollow", user_relationships_path(user), method: :delete, class: "btn btn-danger btn-block" %>
+      <% else %>
+        <%= link_to "Follow", user_relationships_path(user), method: :post, class: "btn btn-primary btn-block" %>
+      <% end %>
+    </div>
   <% end %>
 </div>
