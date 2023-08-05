@@ -4,9 +4,8 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
-      <th>Likes</th>
       <th>Comments</th>
-      <th></th>
+      <th colspan="3"></th>
     </tr>
   </thead>
   <tbody>
@@ -19,19 +18,10 @@
         </td>
         <td><%= link_to book.title, book %></td>
         <td><%= book.body %></td>
-        <td><strong>Likes:</strong> <%= book.likes_count %></td>
         <td><strong>Comments:</strong> <%= book.comments_count %></td>
-        <td>
-          <% if current_user.favorite_books.include?(book) %>
-            <%= link_to book_favorites_path(book), method: :delete, class: "btn btn-danger" do %>
-              <i class="fas fa-heart"></i> <%= book.likes_count %>
-            <% end %>
-          <% else %>
-            <%= link_to book_favorites_path(book), method: :post, class: "btn btn-primary" do %>
-              <i class="far fa-heart"></i>  <%= book.likes_count %>
-            <% end %>
-          <% end %>
-        </td>
+        <td id="favorite_btn_<%= book.id %>">
+         <%= render "favorites/likes", book: book %>
+       </td>
       </tr>
     <% end %>
   </tbody>

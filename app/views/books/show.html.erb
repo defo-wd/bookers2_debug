@@ -21,17 +21,9 @@
            <td id="comment_counter">
              <<%= render "comments/counter", book: @book %>
           </td>
-          <td>
-            <% if current_user.favorite_books.include?(@book) %>
-              <%= link_to book_favorites_path(@book), method: :delete, class: "btn btn-danger" do %>
-                <i class="fas fa-heart"></i> <%= @book.likes_count %>
-              <% end %>
-            <% else %>
-              <%= link_to book_favorites_path(@book), method: :post, class: "btn btn-primary" do %>
-                <i class="far fa-heart"></i>  <%= @book.likes_count %>
-              <% end %>
-            <% end %>
-          </td>
+          <td id="favorite_btn_<%= @book.id %>">
+             <%= render "favorites/likes", book: @book %>
+           </td>
         </tr>
       </table>
 

@@ -1,0 +1,10 @@
+
+<% if current_user.favorite_books.include?(book) %>
+  <%= link_to book_favorites_path(book), method: :delete, class: "btn btn-danger", remote: true do %>
+    <i class="fas fa-heart"></i> <%= book.likes_count %>
+  <% end %>
+<% else %>
+  <%= link_to book_favorites_path(book), method: :post, class: "btn btn-primary", remote: true do %>
+    <i class="far fa-heart"></i> <%= book.likes_count %>
+  <% end %>
+<% end %>
