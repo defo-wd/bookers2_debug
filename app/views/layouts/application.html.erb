@@ -11,8 +11,9 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
-      <main>
+      <main class="container">
         <p id="notice"><%= notice %></p>
+        <%= render 'searches/search' %>
         <%= yield %>
       </main>
     <%= render 'layouts/footer' %>

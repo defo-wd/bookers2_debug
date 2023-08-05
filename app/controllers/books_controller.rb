@@ -13,6 +13,12 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     @book = Book.new
+
+    if params[:search].present?
+      @books = Book.search(params[:search])
+    else
+      @books = Book.all
+    end
   end
 
   def create
