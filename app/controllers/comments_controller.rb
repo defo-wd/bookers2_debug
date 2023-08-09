@@ -1,31 +1,26 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_book
 
   def create
-    @comment = current_user.comments.new(comment_params)
-    if @comment.save
-      flash[:notice] = "コメントを投稿しました。"
-    else
-      flash[:alert] = "コメントの投稿に失敗しました。"
+    @book = Book.find(params[:book_id])
+    @comment = current_user.comments.new(book_comment_params)
+    @comment.book_id = @book.id
+    @comment.user_id = current_user.id
+    unless @comment.save
+
     end
-    redirect_to @book
   end
 
+
   def destroy
-    @comment = Comment.find(params[:id])
+    @book = Book.find(params[:book_id])
+    @comment = @book.comments.find(params[:id])
     @comment.destroy
-    flash[:notice] = "コメントを削除しました。"
-    redirect_to @comment.book
+
   end
 
   private
-
-  def comment_params
-    params.require(:comment).permit(:content, :book_id)
-  end
-
-  def set_book
-    @book = Book.find(params[:book_id])
-  end
+    def book_comment_params
+    params.require(:comment).permit(:content)
+    end
 end
